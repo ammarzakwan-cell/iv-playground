@@ -16,6 +16,14 @@ class Cart
 		return $this->cart;
 	}
 	
+	public function showCart(): void
+	{
+		foreach($this->cart as $item) {
+			$no = $this->search($item);
+			echo PHP_EOL . $item . ' ' . $no[$item];
+		}
+	}
+	
 	public function getValue()
 	{
 		echo $this->hi . ' myname';
@@ -26,8 +34,8 @@ class Cart
 		$total = 0;
 		foreach($this->cart as $item) {
 			$no = $this->search($item);
-			if ($no != 0) {
-				$total+=$no;
+			if ($no[$item] != 0) {
+				$total+=$no[$item];
 			}
 		}
 		return $total;
@@ -37,7 +45,8 @@ class Cart
 	{
 		foreach($this->catalog as $key => $value) {
 			if ($key == $item) {
-				return $value ?? 0;
+				// return $value ?? 0;
+				return [$key => $value];
 			}
 		}
 	}
@@ -52,5 +61,8 @@ $items = $test->displayCart();
 foreach($items as $item) {
 	echo PHP_EOL . $item . PHP_EOL;
 }
-
+$ammar = $test->search('tv');
+var_dump($ammar['tv']);
 var_dump($test->calc());
+
+$test->showCart();
